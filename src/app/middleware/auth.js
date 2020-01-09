@@ -12,10 +12,10 @@ export default async (req, res, next) => {
 
   const [, token] = authHeader.split(' ');
 
-  const decoded2 = await promisify(jwt.verify)(token, authConfig.secret);
-
   try {
     const decoded = await promisify(jwt.verify)(token, authConfig.secret);
+    if (decoded.id !== 1)
+      throw new Error(res.status(401).json({ error: 'You must be Admin' }));
     req.userId = decoded.id;
     return next();
   } catch (error) {

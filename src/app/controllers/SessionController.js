@@ -13,7 +13,7 @@ class SessionController {
       return res.status(401).json({ error: 'Email does not exist' });
     }
 
-    if (!(await user).checkPassword(password)) {
+    if (!(await user.checkPassword(password))) {
       return res.status(401).json({ error: 'Password does not math' });
     }
 
